@@ -2,15 +2,16 @@
  * @author Samartha
  *
  */
-public class TernarySearchTree {
+public class TrinaryTree {
 	
 	Node root;
 	
 	static class Node{
+		//Structure of Tree Node
 		int data;
-		Node left;
-		Node center;
-		Node right;
+		Node left;		//left node has data < parent
+		Node center;	//center node has data == parent
+		Node right;		//right node has data > parent
 		
 		//parameterized constructor
 		Node(int data){
@@ -19,7 +20,7 @@ public class TernarySearchTree {
 			this.center = null;
 			this.right = null;
 		}
-		 
+		
 		public void setLeft(Node left){
             this.left = left;
         }
@@ -53,24 +54,18 @@ public class TernarySearchTree {
         }
 	}
 
-	public TernarySearchTree() {
-		// Constructor
+	//Constructor
+	public TrinaryTree() { 
 		root = null;
 	}
 	
-	public boolean isEmpty(){
-		if(root == null)
-			return true;
-		return false;
-			
-	}
-	
+	//Method to insert a value to Trinary Tree	
 	public void insert(int value){
 		root = insert(root, value);
 	}
 	
+	//Method to create a new node with the given value and insert it to the Trinary Tree 
 	private Node insert(Node root, int value){
-		System.out.println("Inside Node Insert");
 		if(root == null){
 			root = new Node(value);
 			root.setLeft(null);
@@ -91,15 +86,16 @@ public class TernarySearchTree {
 		return root;
 	}
 	
-	//Delete a node
+	//Delete a value from the Trinary Tree
 	public void delete(int value){
+		System.out.println("Delete " + value + " from the Tree...");
 		root = delete(root, value);
-		//root = delete(root, value);
+		
 	}
 	
+	//Method to delete the node with a give value from the Trinary Tree
 	private Node delete(Node root, int value){
 		if(isPresent(root, value)){
-			System.out.println("Entered if");
 			if(root == null){
 				return root;
 			}
@@ -110,7 +106,6 @@ public class TernarySearchTree {
 				root.setRight(delete(root.getRight(), value));
 			}
 			else  { //found element to delete
-				System.out.println("Found element to delete");
 				if(root.getLeft()==null && root.getCenter()==null && root.getRight()==null){
 					root = null;
 					return root;
@@ -136,18 +131,20 @@ public class TernarySearchTree {
 					}
 					
 				}
-			}
-			
+			}		
 		}
-//		else {
-//			System.out.println("Element not found to delete !!!");
-//		}
+		else {
+			System.out.println(value + " not present in the Trinary tree");
+		}
+
 		if(isPresent(root, value)){
 			root=delete(root, value);
 		}
 		return root;
 	}
 	
+	//Find the maximum element of the subtree starting from the given "root" node
+	//Maximum element is the Right child of the right-most subtree of the given tree node
 	private Node findMax(Node root){
 		if(root == null){
 			return root;
@@ -157,16 +154,16 @@ public class TernarySearchTree {
 				root = root.getRight();
 			}
 		}
-		System.out.println("Max elt = " + root.getData());
+		//System.out.println("Max element = " + root.getData());
 		return root;
 	}
 	
+	//Method to check if node with the given value is present in the tree or not
 	private boolean isPresent(Node root, int value){
 		if(root == null){
 			return false;			
 		}
 		else if(value == root.getData()){
-			System.out.println("Element found : " + root.getData());
 			return true;
 		}
 				
@@ -179,7 +176,7 @@ public class TernarySearchTree {
 		return false;
 	}
 	
-	//Inorder Tree Traversal
+	//Inorder Tree Traversal starting from the Root of the Trinary Tree
 	public void traverseTree(Node root){
 		if(root != null){
 			traverseTree(root.getLeft());
@@ -187,32 +184,36 @@ public class TernarySearchTree {
 			System.out.print(root.getData()+ " ");
 			traverseTree(root.getRight());
 		}
-		//System.out.println();
-	
+		
 	}
 	
+	//Method to traverse the Trinary tree 
 	public void traverseTree(){
-		System.out.println("Inside Traverse Tree");
+		System.out.println("---------------------------------------------");
+		System.out.println("Inorder tree traversal starting from root : ");
 		if(this.root == null){
 			System.out.println("Empty Tree");
 		}
 		else traverseTree(root);
+		System.out.println();
+		System.out.println("---------------------------------------------");
 	}
 	
 	public static void main(String[] args) {
-		TernarySearchTree TSTree = new TernarySearchTree();
-		TSTree.insert(5);
-		TSTree.insert(4);
-		TSTree.insert(9);
-		TSTree.insert(5);
-		TSTree.insert(7);
-		TSTree.insert(2);
-		TSTree.insert(2);
-		
+		TrinaryTree TSTree = new TrinaryTree();
 		TSTree.traverseTree();
+		TSTree.insert(5);		//insert element 5 to the Tree -> this is the root of the tree
+		TSTree.insert(4);		//insert element 4 to the Tree
+		TSTree.insert(9);		//insert element 9 to the Tree
+		TSTree.insert(5);		//insert element 5 to the Tree
+		TSTree.insert(7);		//insert element 7 to the Tree
+		TSTree.insert(2);		//insert element 2 to the Tree	
+		TSTree.insert(2);		//insert element 2 to the Tree
 		
-		TSTree.delete(2);
-		TSTree.traverseTree();
+		TSTree.traverseTree();	//Traverse the Tree -> Inorder traversal
+		
+		TSTree.delete(2);		//Delete element 2 from the tree
+		TSTree.traverseTree();	//Traverse the Tree -> Inorder traversal
 
 	}
 
